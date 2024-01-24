@@ -1,19 +1,29 @@
 import express from 'express';
 import { Task } from '../models/db.task';
 import { User } from '../models/db.user';
+import { Logger } from '../log/logger';
 
 
 export const getAllUserTask = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const data = await Task.findAll({
         where: { userId: req.params.userId }
     });
+    //console.log(Logger);
+    Logger.info({
+        message: 'Get All Tasks',
+        response: data
+    })
     return res.send(data).status(200);
 }
 
 export const deleteTask = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const id = req.params.id;
-    await Task.destroy({
+    let deleteData = await Task.destroy({
         where: { id: id }
+    });
+    Logger.info({
+        message: 'Delete User Task',
+        response: deleteData
     });
     const data = await Task.findAll({
         where: { userId: req.params.userId }
@@ -23,7 +33,12 @@ export const deleteTask = async (req: express.Request, res: express.Response, ne
 
 export const editTask = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const id = req.params.id;
-    await Task.update({ title: req.body.title, description: req.body.description, status: req.body.status }, { where: { id: id } });
+    let updateData =
+        await Task.update({ title: req.body.title, description: req.body.description, status: req.body.status }, { where: { id: id } });
+    Logger.info({
+        message: 'Update User Task',
+        response: updateData
+    })
     const data = await Task.findAll({
         where: { userId: req.body.userId }
     });
@@ -32,7 +47,11 @@ export const editTask = async (req: express.Request, res: express.Response, next
 
 export const addTask = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const body = req.body;
-    await Task.create(body);
+    let addData = await Task.create(body);
+    Logger.info({
+        message: 'Add User Task',
+        response: addData
+    });
     const data = await Task.findAll({
         where: { userId: req.body.userId }
     });

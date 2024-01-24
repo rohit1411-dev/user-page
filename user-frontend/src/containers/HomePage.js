@@ -29,6 +29,7 @@ const HomePage = () => {
             if (response && response.status === 200) {
                 const data = await response.json();
                 localStorage.setItem('userId', data.id);
+                localStorage.setItem('username', data.username);
                 localStorage.setItem('user_access_token', data.accessToken);
                 navigate('/task');
             } else

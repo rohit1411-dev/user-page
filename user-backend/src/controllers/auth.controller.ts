@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { secretKey } from '../config/constant';
 import express from 'express';
 import { User } from '../models/db.user';
+import { Logger } from '../log/logger'
 
 export const signin = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const users = await User.findAll();
@@ -20,6 +21,13 @@ export const signin = async (req: express.Request, res: express.Response, next: 
         allowInsecureKeySizes: true,
         expiresIn: 86400, // 24 hours
     });
+    Logger.info({
+        message: 'User Sign in',
+        userDetails: {
+            id: user.userId,
+            username: user.username,
+        }
+    })
     res.status(200).send({
         id: user.userId,
         username: user.username,

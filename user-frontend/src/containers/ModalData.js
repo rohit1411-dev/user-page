@@ -1,12 +1,14 @@
 import Button from 'react-bootstrap/Button';
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import Modal from 'react-bootstrap/Modal';
 
 function ModalData({ show, handleClose, EditValues, add, AddValues, rowData }) {
     const data = {};
+
     function handleInput(e) {
         data[e.target.name] = e.target.value;
     }
+
     return (
         <>
             <Modal
@@ -19,13 +21,21 @@ function ModalData({ show, handleClose, EditValues, add, AddValues, rowData }) {
                     <Modal.Title>{add ? 'Add Titles' : 'Edit Titles'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <TextField type='text' name='title' placeholder='Title' onChange={handleInput} defaultValue={!add ? rowData.title : ''} />
+                    <TextField fullWidth type='text' name='title' size='30' placeholder='Title' onChange={handleInput} defaultValue={!add ? rowData.title : ''} />
                     <br />
-                    <TextField type='text' name='description' placeholder='Description' onChange={handleInput}
+                    <TextField fullWidth type='text' name='description' size='100' placeholder='Description' onChange={handleInput}
                         defaultValue={!add ? rowData.description : ''} />
                     <br />
-                    <TextField type='text' name='status' placeholder='Status' onChange={handleInput}
-                        defaultValue={!add ? rowData.status : ''} />
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                        <Select
+                            name="status"
+                            onChange={handleInput}
+                        >
+                            <MenuItem value={'Done'}>Done</MenuItem>
+                            <MenuItem value={'Progress'}>Progress</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

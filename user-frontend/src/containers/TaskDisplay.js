@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const TaskDisplay = () => {
     Axios.defaults.headers['x-access-token'] = localStorage.getItem('user_access_token');
-
+    const username = localStorage.getItem('username');
     const [data, setData] = useState([]);
     const [add, setAdd] = useState(false);
     const [show, setShow] = useState(false);
@@ -58,7 +58,7 @@ const TaskDisplay = () => {
     }
 
     const AddValues = (data) => {
-        data['userId'] = localStorage.getItem('userId');
+        data['userId'] = parseInt(localStorage.getItem('userId'));
         Axios.post(`http://localhost:8080/api/task/add`, data).then((res) => {
             setData(res.data);
         }).catch((error) => {
@@ -112,17 +112,23 @@ const TaskDisplay = () => {
     }, []);
 
     return (
-        <div >
-            <Button variant="primary" style={{ float: 'left', marginLeft: '10px' }} onClick={onAdd}>Add Title</Button>
-            <Button variant="secondary" style={{ float: 'right', marginRight: '20px' }} onClick={onLogout} >Logout</Button>
-            <br /><br />
-            <BootstrapTable keyField='id' data={data} columns={columns}
-                striped hover condensed
-                pagination={paginationFactory()}
-            />
-            {show && <ModalData show={show} handleClose={handleClose} EditValues={EditValues} add={add}
-                AddValues={AddValues} rowData={rowData} />}
-        </div>
+        <>
+            <div>
+                <h3 style={{ textAlign: 'center' }}>{`Username -> ${username[0].toUpperCase() + username.slice(1)}`}</h3>
+
+            </div>
+            <div >
+                <Button variant="primary" style={{ float: 'left', marginLeft: '10px' }} onClick={onAdd}>Add Title</Button>
+                <Button variant="secondary" style={{ float: 'right', marginRight: '20px' }} onClick={onLogout} >Logout</Button>
+                <br /><br />
+                <BootstrapTable keyField='id' data={data} columns={columns}
+                    striped hover condensed
+                    pagination={paginationFactory()}
+                />
+                {show && <ModalData show={show} handleClose={handleClose} EditValues={EditValues} add={add}
+                    AddValues={AddValues} rowData={rowData} />}
+            </div>
+        </>
     )
 }
 export default TaskDisplay; 
