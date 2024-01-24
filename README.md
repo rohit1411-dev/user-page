@@ -12,3 +12,13 @@ or change credentials in userbackend - src/models/db.coonect.ts
 [{"userId": 1,"username": "admin","password": "password"},{"userId": 2,"username": "salman","password": "qwerty"},{"userId": 3,"username": "tom","password": "client"},"userId": 4,"username": "george","password": "lenovo"}];
 6. Login with either of above username and password mentioned.
 7. Create task in Task table for every user and perform the crud operations.
+
+Functionalities implemented
+1.User Sign in and authentication
+2.CRUD operations - Implemented for individual users
+3.Logging in backend user sign in  for Edit, Delete and Add operations.
+4.Data Table Pagination and Sorting
+5. Display database and username after logging in.
+
+
+
