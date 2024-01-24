@@ -4,6 +4,13 @@ import express from 'express';
 import { User } from '../models/db.user';
 import { Logger } from '../log/logger'
 
+/**
+ * User Sign in 
+ * @param req 
+ * @param res 
+ * @param next 
+ * @returns 
+ */
 export const signin = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const users = await User.findAll();
     let isPasswordValid = users.some((user) => {

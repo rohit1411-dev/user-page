@@ -1,5 +1,5 @@
-import winston, { transports } from 'winston';
-const { combine, timestamp, printf, colorize, align } = winston.format;
+import winston from 'winston';
+const { combine, timestamp } = winston.format;
 
 const Consoletransport = new winston.transports.Console({
     format: winston.format.combine(

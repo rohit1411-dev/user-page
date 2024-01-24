@@ -2,6 +2,13 @@ import jwt from 'jsonwebtoken';
 import express from 'express';
 import { secretKey } from '../config/constant'
 
+/**
+ * Verify Access Token
+ * @param req 
+ * @param res 
+ * @param next 
+ * @returns 
+ */
 export const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     let token = req.headers['x-access-token'];
     if (!token) {
