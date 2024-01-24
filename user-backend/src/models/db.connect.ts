@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Task } from './db.task';
+import { User } from './db.user';
 
 export const connectToDB = async () => {
     try {
@@ -10,7 +11,7 @@ export const connectToDB = async () => {
             password: "password", // Specifies the database password
             database: "taskdata", // Specifies the database name
             logging: false, // Disables logging of SQL queries,
-            models: [Task],
+            models: [Task, User],
         });
         await connection.sync();
     } catch (error) {

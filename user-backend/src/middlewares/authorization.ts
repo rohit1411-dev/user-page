@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import express from 'express';
-const config = process.env.task_management;
+import { secretKey } from '../config/constant'
 
 export const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     let token = req.headers['x-access-token'];
@@ -9,10 +9,10 @@ export const verifyToken = (req: express.Request, res: express.Response, next: e
             message: 'No Token is provided'
         });
     }
-    jwt.verify(token, 'task-secret-key', (err: any, decoded: any) => {
+    jwt.verify(token, secretKey, (err: any, decoded: any) => {
         if (err)
             return res.status(403).send({
-                message: 'Unautorized'
+                message: 'Unauthorized'
             });
         req['userId'] = decoded.id;
         next();
